@@ -4,7 +4,7 @@ export default function CreateOrganizationPage() {
     return (
         <OrganizationList 
         hidePersonal //hide personal acc as organization
-        afterSelectOrganizationUrl="/organization/:id"
+        afterSelectOrganizationUrl="/organization/:id" // :id - slug
         afterCreateOrganizationUrl="/organization/:id"
         />
     )
