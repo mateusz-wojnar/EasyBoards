@@ -1,13 +1,14 @@
-import { auth,currentUser } from "@clerk/nextjs"
-import { deflate } from "zlib"
+"use client";
 
-const ProtectedPage = async () => {
-    const user = await currentUser(); //Clerk Hook
-    const {userId} = auth();
+import { UserButton} from "@clerk/nextjs";
+
+const ProtectedPage = () => {
+
     return (
         <div>
-            User: {user?.firstName}
-            UserId: {userId}
+            <UserButton 
+            afterSignOutUrl="/"
+            />
         </div>
     )
 }
