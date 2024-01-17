@@ -3,6 +3,8 @@
 import { db } from "@/lib/db";
 import { revalidatePath } from "next/cache";
 
+
+// CRUD - DELETE 
 export async function deleteBoard(id: string) {
     await db.board.delete({
         where: {

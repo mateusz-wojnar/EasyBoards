@@ -1,7 +1,6 @@
-import { create } from "@/actions/create-board"
-import { Button } from "@/components/ui/button"
 import { db } from "@/lib/db"
 import { Board } from "./board"
+import { Form } from "./form"
 
 const OrganizationIdPage = async () => {
     //CRUD - R - SELECT
@@ -9,18 +8,7 @@ const OrganizationIdPage = async () => {
 
     return (
         <div className="flex flex-col space-y-4">
-            <form action={create}>
-                <input 
-                    id="title"
-                    name="title"
-                    required
-                    placeholder="Enter a board title"
-                    className="border border-black p-1"
-                />
-                <Button type="submit">
-                    Submit
-                </Button>
-            </form>
+            <Form />
             {/* CRUD - SELECT TITLE FROM */}
             <div className="space-y-2">
                 {boards.map((board) =>(
