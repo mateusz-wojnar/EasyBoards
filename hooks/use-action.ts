@@ -34,10 +34,7 @@ export const useAction =  <TInput,TOutput> (
                     return
                 }
 
-                //something went wrong with validation
-                if (result.fieldErrors) {
-                    setFieldErrors(result.fieldErrors)
-                }
+                setFieldErrors(result.fieldErrors)
 
                 //if server error set error and callback - internal error, not rendered
                 if (result.error) {
