@@ -13,6 +13,15 @@ generator client {
 
 
 model Board {
-  id String @id @default(uuid())
-  title String
+  id            String @id @default(uuid())
+  orgId         String
+  title         String
+  imageId       String
+  imageThumbUrl String @db.Text // db.text to accepting very long text
+  imageFullUrl  String @db.Text
+  imageUserName String @db.Text
+  imageLinkHTML String @db.Text
+
+  createdAt     DateTime @default(now()) // get datetime from now
+  updatedAt     DateTime @updatedAt //automaticaly get time from update when record last updated
 }

@@ -2,11 +2,16 @@
 
 import { useEffect, useState } from "react"
 
+import Link from "next/link"
 import { unsplash } from "@/lib/unsplash"
-import { Loader2 } from "lucide-react"
+import { Check, Loader2 } from "lucide-react"
 import { useFormStatus } from "react-dom"
 import { cn } from "@/lib/utils"
 import Image from "next/image"
+
+//import hardoced images to not overflow available unsplash api requests for development
+import  {defaultImages} from "@/constants/images"
+import { FormErrors } from "./form-errors"
 
 //form picker to pick generated img from unsplash api
 
@@ -22,7 +27,7 @@ export const FormPicker = ({
     //assing inital images
     const {pending} = useFormStatus()
 
-    const [images, setImages] = useState<Array<Record<string, any>>>([])
+    const [images, setImages] = useState<Array<Record<string, any>>>(defaultImages)
     const [isLoading, setIsLoading] = useState(true)
     const [selectedImageId, setSelectedImageId] = useState(null)
 
@@ -30,6 +35,9 @@ export const FormPicker = ({
     useEffect(() => {
         const fetchImages = async () => {
             try {
+                //artificial error
+                throw new Error("Artificial error to prevent api calls");
+                
                 const result = await unsplash.photos.getRandom({
                     collectionIds: ["317099"],
                     count: 9,
@@ -44,7 +52,7 @@ export const FormPicker = ({
 
             } catch (error) {
                 console.log(error)
-                setImages([])
+                setImages(defaultImages)
             } finally {
                 setIsLoading(false)
             }
@@ -77,15 +85,43 @@ export const FormPicker = ({
                             setSelectedImageId(image.id)
                         }}                   
                     >
+                        
+                        <input 
+                            type="radio"
+                            id={id}
+                            name={id}
+                            className="hidden"
+                            checked={selectedImageId === image.id}
+                            disabled={pending}
+                            //pipes needed to extract and divide data by pipe to array
+                            value={`${image.id}|${image.urls.thumb}|${image.urls.full}|${image.links.html}|${image.user.name}`} 
+                        />
                         <Image 
                             src={image.urls.thumb}
                             alt="Unsplash image"
                             className="object-cover rounded-sm"
                             fill
                         />
+                        {/* indicate image selection */}
+                        {selectedImageId === image.id && (
+                            <div className="absolute inset-y-0 h-full w-full bg-black/30 flex items-center justify-center">
+                                <Check className="h-4 w-4 text-white" />
+                            </div>
+                        )}
+                        <Link 
+                            href={image.links.html}
+                            target="_blank"
+                            className="opacity-0 group-hover:opacity-100 absolute bottom-0 w-full text-[10px] truncate text-white hover:underline p-1 bg-black/50"
+                        >
+                            {image.user.name}
+                        </Link>
                     </div>
                 ))}
             </div>
+            <FormErrors 
+                id="image"
+                errors={errors}
+            />
         </div>
     )
 }
