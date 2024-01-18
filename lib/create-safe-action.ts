@@ -1,6 +1,8 @@
 import { ActionResult } from "next/dist/server/app-render/types"
 import {z} from "zod"
 
+//wrapper to combine server action for validation and crud operations
+
 export type FieldErrors<T> = {
     [K in keyof T]?: string[]
 }
