@@ -1,11 +1,16 @@
 "use client"
 
-import { ListWithCards } from "@/types"
 import { useEffect, useState } from "react"
 import {DragDropContext, Droppable} from "@hello-pangea/dnd"
+import { toast } from "sonner"
 
+import { useAction } from "@/hooks/use-action"
+import { updateListOrder } from "@/actions/update-list-order"
+import { updateCardOrder } from "@/actions/update-card-order"
+import { ListWithCards } from "@/types"
 import { ListForm } from "./list-form"
 import { ListItem } from "./list-item"
+import { exec } from "child_process"
 
 interface ListContainerProps {
     data: ListWithCards[]
@@ -25,6 +30,24 @@ export const ListContainer = ({
     boardId
 }: ListContainerProps) => {
     const [orderedData, setOrderedData] = useState(data)
+
+    const {execute: executeUpdateListOrder} = useAction(updateListOrder, {
+        onSuccess: () => {
+            toast.success("List reordered.")
+        },
+        onError: (error) => {
+            toast.error(error)
+        }
+    })
+
+    const {execute: executeUpdateCardOrder} = useAction(updateCardOrder, {
+        onSuccess: () => {
+            toast.success("Card reordered.")
+        },
+        onError: (error) => {
+            toast.error(error)
+        }
+    })
 
     //effect for ensuring optimistic updates
     useEffect(() => {
@@ -57,7 +80,8 @@ const onDragEnd = (result: any) => {
         ).map((item, index) => ({...item, order: index}))
 
         setOrderedData(items)
-        // TODO: trigger server action
+        //execute server action
+        executeUpdateListOrder({items,boardId})
     }
 
     //if card is moved
@@ -98,7 +122,11 @@ const onDragEnd = (result: any) => {
             sourceList.cards = reorderedCards
 
             setOrderedData(newOrededData)
-            //TODO: trigger server action
+            //execute server action
+            executeUpdateCardOrder({
+                boardId: boardId,
+                items: reorderedCards
+            })
         //if card moved to another list
         } else {
             // remove card from source list
@@ -120,7 +148,10 @@ const onDragEnd = (result: any) => {
             })
 
             setOrderedData(newOrededData)
-            //TODO: trigger server action
+            executeUpdateCardOrder({
+                boardId: boardId,
+                items: destinationList.cards
+            })
         }
 
         
