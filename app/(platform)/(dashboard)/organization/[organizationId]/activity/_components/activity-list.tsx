@@ -4,6 +4,7 @@ import { redirect } from "next/navigation"
 import { db } from "@/lib/db"
 import { ActivityItem } from "@/components/activity-item"
 import { Skeleton } from "@/components/ui/skeleton"
+import { Button } from "@/components/ui/button"
 
 export const ActivityList = async () => {
     const {orgId} = auth()
@@ -21,15 +22,17 @@ export const ActivityList = async () => {
         },
     })
 
+    
+
     return (
         <ol className="space-y-4 mt-4">
-            <p className="hidden last:block text-xs text-center text-muted-foreground"> 
+            <p className="hidden last:block text-xs text-center text-muted-foreground">
                 There are no any activity logs in this organization.
             </p>
             {auditLogs.map((log) =>(
                 <ActivityItem key={log.id} data={log}/>
             ))}
-        </ol>
+        </ol>               
     )
 }
 

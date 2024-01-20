@@ -4,6 +4,7 @@ import { Separator } from "@/components/ui/separator"
 import { Info } from "../_components/info"
 import { ActivityList } from "./_components/activity-list"
 
+
 const ActivityPage = () => {
     return(
         <div className="w-full">
@@ -14,6 +15,7 @@ const ActivityPage = () => {
             </Suspense>
         </div>
     )
+    
 }
 
 export default ActivityPage
