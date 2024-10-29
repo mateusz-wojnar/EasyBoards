@@ -2,7 +2,7 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 datasource db {
-  provider     = "mysql"
+  provider     = "postgresql"
   url          = env("DATABASE_URL")
   relationMode = "prisma"
 }
@@ -10,7 +10,6 @@ datasource db {
 generator client {
   provider = "prisma-client-js"
 }
-
 
 model Board {
   id            String @id @default(uuid())
@@ -22,39 +21,39 @@ model Board {
   imageUserName String @db.Text
   imageLinkHTML String @db.Text
 
-  lists         List[]
+  lists List[]
 
-  createdAt     DateTime @default(now()) // get datetime from now
-  updatedAt     DateTime @updatedAt //automaticaly get time from update when record last updated
+  createdAt DateTime @default(now()) // get datetime from now
+  updatedAt DateTime @updatedAt // automaticaly get time from update when record last updated
 }
 
 model List {
-  id            String @id @default(uuid())
-  title         String
-  order         Int
+  id    String @id @default(uuid())
+  title String
+  order Int
 
-  boardId       String
-  board         Board @relation(fields: [boardId], references: [id], onDelete: Cascade)
+  boardId String
+  board   Board  @relation(fields: [boardId], references: [id], onDelete: Cascade)
 
-  cards         Card[]
+  cards Card[]
 
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([boardId])
 }
 
 model Card {
-  id            String @id @default(uuid())
-  title         String
-  order         Int
-  description   String? @db.Text
+  id          String  @id @default(uuid())
+  title       String
+  order       Int
+  description String? @db.Text
 
-  listId        String
-  list          List @relation(fields: [listId], references: [id], onDelete: Cascade)
+  listId String
+  list   List   @relation(fields: [listId], references: [id], onDelete: Cascade)
 
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([listId])
 }
@@ -72,16 +71,16 @@ enum ENTITY_TYPE {
 }
 
 model AuditLog {
-  id            String @id @default(uuid())
-  orgId         String
-  action        ACTION
-  entityId      String
-  entityTitle   String
-  entityType    ENTITY_TYPE
-  userId        String
-  userImage     String @db.Text
-  userName      String @db.Text
+  id          String      @id @default(uuid())
+  orgId       String
+  action      ACTION
+  entityId    String
+  entityTitle String
+  entityType  ENTITY_TYPE
+  userId      String
+  userImage   String      @db.Text
+  userName    String      @db.Text
 
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
