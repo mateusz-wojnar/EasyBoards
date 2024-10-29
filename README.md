@@ -19,8 +19,6 @@ Easyboards is a project management tool based on a system of boards, lists, and 
 
 -Tailwind
 
--Prisma
-
 -PostgreSQL
 
 
