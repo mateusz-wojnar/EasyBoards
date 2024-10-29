@@ -1,3 +1,18 @@
+Easyboards is a project management tool based on a system of boards, lists, and cards that helps teams organize tasks and workflows visually. Each board represents a project, cards on the lists represent individual tasks. Cards can be customized labels checklists, and assigned members, allowing for collaborative task tracking.
+
+Tech Stack:
+-Node.js
+-TypeScript
+-React.js
+-Next.js (App router)
+-Tailwind
+-Prisma
+-PostgreSQL
+Most important packages:
+-Prisma
+-Shadcn/ui
+
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
