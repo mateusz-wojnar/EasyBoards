@@ -1,5 +1,12 @@
 Easyboards is a project management tool based on a system of boards, lists, and cards that helps teams organize tasks and workflows visually. Each board represents a project, cards on the lists represent individual tasks. Cards can be customized labels checklists, and assigned members, allowing for collaborative task tracking.
 
+![image](https://github.com/user-attachments/assets/c4c8c84d-be1b-453e-a5d7-98a42bf78185)
+![image](https://github.com/user-attachments/assets/1ff3f5f9-b803-4787-ae5b-99bb187ef3bc)
+![image](https://github.com/user-attachments/assets/aa51cc99-7181-4b2e-b2a4-f664c91565cd)
+
+
+
+
 ## Tech Stack:
 
 -Node.js
